@@ -51,7 +51,8 @@ export const useMount = (callback: () => void) => {
  *          // 所以，log() #3 结束后，就只剩 timeout#3 独自等待了
  */
 
-export const useDebounce = (value: unknown, delay?: number): any => {
+// 泛型
+export const useDebounce = <V>(value: V, delay?: number) => {
   const [debounceValue, setDebounceValue] = useState(value)
 
   useEffect(() => {
