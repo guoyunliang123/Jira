@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // 判断当 value 等于 0 时
-export const isFalsy = (value: any) => value === 0 ? false : !value;
+export const isFalsy = (value: unknown) => value === 0 ? false : !value;
 
 // 在一个函数里，改变传入的对象本身是不好的
 // 删除对象属性值为空的属性
@@ -51,7 +51,7 @@ export const useMount = (callback: () => void) => {
  *          // 所以，log() #3 结束后，就只剩 timeout#3 独自等待了
  */
 
-export const useDebounce = (value: any, delay?: number) => {
+export const useDebounce = (value: unknown, delay?: number): any => {
   const [debounceValue, setDebounceValue] = useState(value)
 
   useEffect(() => {
