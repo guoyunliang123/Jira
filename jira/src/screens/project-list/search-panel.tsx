@@ -20,7 +20,7 @@ interface SearchPenelProps {
 
 export const SearchPanel = ({users, param, setParam}: SearchPenelProps) => {
 
-  return <form>
+  return <form style={{marginTop: 30}}>
     <div>
       {/* setParam(Object.assign({}, param, {name: evt.target.value})) */}
       <input type="text" value={param.name} onChange={evt => setParam({

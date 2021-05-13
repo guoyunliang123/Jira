@@ -15,7 +15,7 @@ interface ListProps {
 }
 
 export const List = ({list, users}: ListProps) => {
-  return <table>
+  return <table style={{margin: "50px auto"}}>
     <thead>
       <tr>
         <th>名称</th>
