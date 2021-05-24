@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import {Row} from "./components/lib";
 // import softwareLogo from 'assets/software-logo.svg';
 import {ReactComponent as SoftwareLogo} from "assets/software-logo.svg";
-import {Dropdown, Menu} from "antd";
+import {Button, Dropdown, Menu} from "antd";
 
 /**
  * grid 和 flex 各自的应用场景
@@ -33,12 +33,13 @@ export const AuthenticatedApp = () => {
         <HeaderRight>
           <Dropdown overlay={<Menu>
             <Menu.Item key={'layout'}>
-              <a onClick={logout}>登出</a>
+              <Button type={'link'} onClick={logout}>登出</Button>
+              {/*<a href={""} onClick={logout}>登出</a>*/}
             </Menu.Item>
           </Menu>}>
-            <a onClick={e => e.preventDefault()}>
+            <Button type={'link'} onClick={e => e.preventDefault()}>
               Hi, {user?.name}
-            </a>
+            </Button>
           </Dropdown>
         </HeaderRight>
       </Header>
@@ -48,10 +49,6 @@ export const AuthenticatedApp = () => {
     </Container>
   );
 };
-
-const HeaderItem = styled.h3`
-  margin-right: 3rem;
-`
 
 const Container = styled.div`
   display: grid;

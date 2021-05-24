@@ -56,16 +56,16 @@ export const useHttp = () => {
 }
 
 // 联合类型
-let myFavoriteNumber: string | number
-myFavoriteNumber = 'one'
-myFavoriteNumber = 1
-// TS2322: Type '{}' is not assignable to type 'string | number'.
-// myFavoriteNumber = {}
-let jackFavoriteNumber: string | number
-
-// 类型别名(type)
-type FavoriteNumber = string | number // 联合类型
-let rose: FavoriteNumber = 'rose'
+// let myFavoriteNumber: string | number
+// myFavoriteNumber = 'one'
+// myFavoriteNumber = 1
+// // TS2322: Type '{}' is not assignable to type 'string | number'.
+// // myFavoriteNumber = {}
+// let jackFavoriteNumber: string | number
+//
+// // 类型别名(type)
+// type FavoriteNumber = string | number // 联合类型
+// let rose: FavoriteNumber = 'rose'
 
 /**
  * 类型别名和 interface 区别和相同点
@@ -80,20 +80,20 @@ let rose: FavoriteNumber = 'rose'
 // type Person = {name: string}
 // const xiaoMing: Person = {name: 'xiaoMing'}
 
-type Person = {
-  name: string,
-  age: number
-}
-// Partial<Person> 参数可以传可以不传
-const xiaoMing: Partial<Person> = {name: 'xiaoMing'}
-// Omit<Person, 'name' | 'age'> 第一个参数：传入的类型；第二个参数：删除的类型
-// 必须传入 age
-const shenMiRen: Omit<Person, 'name'> = {age: 19}
-type PersonKey = keyof Person // PersonKey: name | age
-type PersonOnlyName = Pick<Person, 'name' | 'age'>
-type Age = Exclude<PersonKey, 'name'>
-
-// Partial 的实现
-type Partial<T> = {
-  [P in keyof T]?: T[P];
-};
+// type Person = {
+//   name: string,
+//   age: number
+// }
+// // Partial<Person> 参数可以传可以不传
+// const xiaoMing: Partial<Person> = {name: 'xiaoMing'}
+// // Omit<Person, 'name' | 'age'> 第一个参数：传入的类型；第二个参数：删除的类型
+// // 必须传入 age
+// const shenMiRen: Omit<Person, 'name'> = {age: 19}
+// type PersonKey = keyof Person // PersonKey: name | age
+// type PersonOnlyName = Pick<Person, 'name' | 'age'>
+// type Age = Exclude<PersonKey, 'name'>
+//
+// // Partial 的实现
+// type Partial<T> = {
+//   [P in keyof T]?: T[P];
+// };
