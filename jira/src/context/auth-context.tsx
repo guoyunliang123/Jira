@@ -1,9 +1,10 @@
 import React, {ReactNode, useState} from 'react'
 import * as auth from 'auth-provider'
-import { User } from 'screens/project-list/search-panel';
+import {User} from 'screens/project-list/search-panel';
 import {http} from "../utils/http";
 import {useMount} from "../utils";
-import {set} from "husky";
+import {useAsync} from "../utils/use-async";
+import {FullPageErrorFallback, FullPageLoading} from "../components/lib";
 
 interface AuthForm {
   username: string,
@@ -14,7 +15,7 @@ interface AuthForm {
 const bootstrapUser = async () => {
   let user = null;
   const token = auth.getToken()
-  if(token) {
+  if (token) {
     const data = await http('me', {token})
     user = data.user
   }
@@ -29,8 +30,8 @@ const AuthContext = React.createContext<{
 } | undefined>(undefined);
 AuthContext.displayName = 'AuthContext';
 
-export const AuthProvider = ({children}: {children: ReactNode}) => {
-  const [user, setUser] = useState<User | null>(null);
+export const AuthProvider = ({children}: { children: ReactNode }) => {
+  const {data: user, error, isLoading, isIdle, isError, run, setData: setUser} = useAsync<User | null>()
 
   // point free
   const login = (form: AuthForm) => auth.login(form).then(setUser)
@@ -38,15 +39,24 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
   const logout = () => auth.logout().then(() => setUser(null))
 
   useMount(() => {
-    bootstrapUser().then(setUser)
+    run(bootstrapUser())
   })
 
-  return <AuthContext.Provider children={children} value={{user, login, register, logout}} />
+  // 在获取登录用户信息的时候，加载 loading
+  if (isIdle || isLoading) {
+    return <FullPageLoading/>
+  }
+
+  if (isError) {
+    return <FullPageErrorFallback error={error}/>
+  }
+
+  return <AuthContext.Provider children={children} value={{user, login, register, logout}}/>
 }
 
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
-  if(!context) {
+  if (!context) {
     throw new Error('useAuth 必须在 AuthProvider 中使用!');
   }
   return context;
