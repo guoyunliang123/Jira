@@ -13,10 +13,13 @@ export const UnauthenticatedApp = () => {
   return <Container>
     <Header/>
     <Background/>
+    <Button onClick={() => {
+      throw new Error('点击抛出一个异常')
+    }}>抛出异常</Button>
     <ShadowCard>
       <Title>{isRegister ? '请注册' : '请登录'}</Title>
       {error ? <Typography.Text type={"danger"}>{error.message}</Typography.Text> : null}
-        {isRegister ? <RegisterScreen onError={setError}/> : <LoginScreen onError={setError}/>}
+      {isRegister ? <RegisterScreen onError={setError}/> : <LoginScreen onError={setError}/>}
       <Divider/>
       <Button type={'link'} onClick={() => setIsRegister(!isRegister)}>
         {isRegister ? '已经有账号了？直接登陆' : '没有账号？注册新账号'}
