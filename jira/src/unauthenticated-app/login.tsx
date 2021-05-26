@@ -1,5 +1,5 @@
 import {useAuth} from 'context/auth-context';
-import React, {useState} from 'react'
+import React from 'react'
 import {Form, Input} from "antd";
 import {LongButton} from "./index";
 import {useAsync} from "../utils/use-async";
@@ -21,7 +21,7 @@ import {useAsync} from "../utils/use-async";
 export const LoginScreen = ({onError}: { onError: (error: Error) => void }) => {
 
   const {login} = useAuth()
-  const {run, isLoading} = useAsync(undefined, {throwOnError: true})
+  const {isLoading} = useAsync(undefined, {throwOnError: true})
 
   // HTMLFormElement extends Element
   const handleSubmit = async (values: { username: string, password: string }) => {

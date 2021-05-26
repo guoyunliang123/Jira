@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React from 'react';
 
 // 实现一个自定义错误边界(只能使用 class 组件来实现)
 type FallbackRender = (props: { error: Error | null }) => React.ReactElement

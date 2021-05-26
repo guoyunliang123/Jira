@@ -21,7 +21,6 @@ import {Button, Dropdown, Menu} from "antd";
 
 export const AuthenticatedApp = () => {
   const {logout, user} = useAuth()
-  const value: any = undefined
   return (
     <Container>
       <Header between={true}>

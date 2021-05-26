@@ -2,7 +2,6 @@ import {useAuth} from 'context/auth-context';
 import React from 'react'
 import {Form, Input} from "antd";
 import {LongButton} from "./index";
-import {Simulate} from "react-dom/test-utils";
 
 // interface Base {
 //   id: number
