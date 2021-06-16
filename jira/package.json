@@ -73,8 +73,5 @@
   },
   "lint-staged": {
     "*.{js,css,md}": "prettier --write"
-  },
-  "msw": {
-    "workerDirectory": "public"
   }
 }

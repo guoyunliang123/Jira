@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {useMountedRef} from "./index";
 
 interface State<D> {
   error: Error | null;
@@ -22,6 +23,7 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
     ...defaultInitialState,
     ...initialState
   })
+  const mountedRef = useMountedRef()
   // useState 直接传入函数的含义是：惰性初始化；所以，要用 useState 保存函数，不能直接传入函数
   // https://react.docschina.org/docs/hooks-reference.html 惰性初始 state
   const [retry, setRetry] = useState(() => () => {
@@ -45,14 +47,15 @@ export const useAsync = <D>(initialState?: State<D>, initialConfig?: typeof defa
       throw new Error('请传入 Promise 类型数据')
     }
     setRetry(() => () => {
-      if(runConfig?.retry) {
+      if (runConfig?.retry) {
         run(runConfig?.retry(), runConfig)
       }
     })
     setState({...state, stat: 'loading'})
     return promise
       .then(data => {
-        setData(data)
+        if (mountedRef.current)
+          setData(data)
         return data
       })
       .catch(error => {
