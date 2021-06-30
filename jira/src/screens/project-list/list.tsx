@@ -7,6 +7,8 @@ import {Link} from "react-router-dom";
 import {Pin} from "../../components/pin";
 import {useEditProject} from "../../utils/project";
 import {ButtonNoPadding} from "../../components/lib";
+import {useDispatch} from "react-redux";
+import {projectListActions} from "./project-list.slice";
 
 export interface Project {
   id: number;
@@ -18,14 +20,13 @@ export interface Project {
 }
 
 interface ListProps extends TableProps<Project> {
-  // list: Project[];
   users: User[];
   refresh?: () => void;
-  projectButton: JSX.Element
 }
 
 export const List = ({users, ...props}: ListProps) => {
   const {mutate} = useEditProject()
+  const dispatch = useDispatch()
   // const pinProject = (id: number, pin: boolean) => mutate({id, pin})
   // 函数柯里化
   const pinProject = (id: number) => (pin: boolean) => mutate({id, pin}).then(props.refresh)
@@ -72,13 +73,24 @@ export const List = ({users, ...props}: ListProps) => {
           }
         }, {
           render(value, project) {
-            return <Dropdown overlay={<Menu>
-              <Menu.Item key={'edit'}>
-                {props.projectButton}
-              </Menu.Item>
-            </Menu>}>
-              <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
-            </Dropdown>
+            return (
+              <Dropdown
+                overlay={
+                  <Menu>
+                    <Menu.Item key={'edit'}>
+                      <ButtonNoPadding
+                        type={'link'}
+                        onClick={() => dispatch(projectListActions.openProjectModal())}
+                      >
+                        编辑
+                      </ButtonNoPadding>
+                    </Menu.Item>
+                  </Menu>
+                }
+              >
+                <ButtonNoPadding type={'link'}>...</ButtonNoPadding>
+              </Dropdown>
+            )
           }
         }]}
       // dataSource={list}
