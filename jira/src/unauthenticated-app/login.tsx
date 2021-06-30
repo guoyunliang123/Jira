@@ -3,6 +3,7 @@ import React from 'react'
 import {Form, Input} from "antd";
 import {LongButton} from "./index";
 import {useAsync} from "../utils/use-async";
+import {useDispatch} from "react-redux";
 
 // interface Base {
 //   id: number
@@ -21,10 +22,14 @@ import {useAsync} from "../utils/use-async";
 export const LoginScreen = ({onError}: { onError: (error: Error) => void }) => {
 
   const {login} = useAuth()
-  const {isLoading} = useAsync(undefined, {throwOnError: true})
+  const {run, isLoading} = useAsync(undefined, {throwOnError: true})
+  const dispatch = useDispatch()
 
   // HTMLFormElement extends Element
-  const handleSubmit = async (values: { username: string, password: string }) => {
+  const handleSubmit = async (values: {
+    username: string,
+    password: string
+  }) => {
     login(values).catch(onError)
     // try {
     //   await run(login(values))
