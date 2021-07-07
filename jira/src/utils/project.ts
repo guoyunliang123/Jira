@@ -1,56 +1,48 @@
-import {useAsync} from "./use-async";
 import {Project} from "../screens/project-list/list"
-import {useCallback, useEffect} from "react";
-import {cleanObject} from "./index";
 import {useHttp} from "./http";
+import {useMutation, useQuery, useQueryClient} from "react-query";
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp()
-  const {run, ...result} = useAsync<Project[]>()
 
-  const fetchProjects = useCallback(
-    () => client('projects', {data: cleanObject(param || {})}), [param, client]
-  );
-
-  useEffect(() => {
-    run(fetchProjects(), {
-      retry: fetchProjects
-    })
-  },[param, run, fetchProjects])
-
-  return result
+  return useQuery<Project[]>(['projects', param], () => client('projects', {data: param}))
 }
 
 // 编辑项目列表
 export const useEditProject = () => {
-  const {run, ...asyncResult} = useAsync()
   const client = useHttp()
-  const mutate = (params: Partial<Project>) => {
-    return run(client(`projects/${params.id}`, {
-      data: params,
-      method: 'PATCH'
-    }))
-  }
+  const queryClient = useQueryClient()
 
-  return {
-    mutate,
-    ...asyncResult
-  }
+  return useMutation((params: Partial<Project>) => client(`projects/${params.id}`, {
+    method: 'PATCH',
+    data: params
+  }), {
+    onSuccess: () => queryClient.invalidateQueries('projects')
+  })
 }
 
 // 新建项目
 export const useAddProject = () => {
-  const {run, ...asyncResult} = useAsync()
   const client = useHttp()
-  const mutate = (params: Partial<Project>) => {
-    return run(client(`projects/${params.id}`, {
-      data: params,
-      method: 'POST'
-    }))
-  }
+  const queryClient = useQueryClient()
 
-  return {
-    mutate,
-    ...asyncResult
-  }
+  return useMutation((params: Partial<Project>) => client(`projects`, {
+    method: 'POST',
+    data: params
+  }), {
+    onSuccess: () => queryClient.invalidateQueries('projects')
+  })
+}
+
+// 获取项目详情 希望 id 为 undefined 的时候不在请求
+export const useProject = (id?: number) => {
+  const client = useHttp()
+
+  return useQuery<Project>(
+    ['project', {id}],
+    () => client(`project/${id}`),
+    {
+      enabled: !!id // 或者 Boolean(id) 只有当这个 id 有值的时候 才会触发这个 useProject
+    }
+  )
 }

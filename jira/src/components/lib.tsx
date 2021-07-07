@@ -33,10 +33,20 @@ export const FullPageLoading = () => <FullPage>
 </FullPage>
 
 // 获取登录信息失败，展示全局错误信息
-export const FullPageErrorFallback = ({error}: { error: Error | null}) => <FullPage>
-  <DevTools />
-  <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
+export const FullPageErrorFallback = ({error}: { error: Error | null }) => <FullPage>
+  <DevTools/>
+  <ErrorBox error={error}/>
 </FullPage>
+
+// 类型守卫
+const isError = (value: any): value is Error => value?.message;
+
+export const ErrorBox = ({error}: { error: unknown }) => {
+  if (isError(error)) {
+    return <Typography.Text type={"danger"}>{error?.message}</Typography.Text>
+  }
+  return null
+}
 
 // padding 为 0 的 button
 export const ButtonNoPadding = styled(Button)`
