@@ -21,10 +21,9 @@ export const useProjectModal = () => {
   const {data: editingProject, isLoading} = useProject(Number(editingProjectId))
 
   const open = () => setProjectCreate({projectCreate: true})
-  const close = () => {
-    setProjectCreate({projectCreate: undefined})
-    setEditingProjectId({editingProjectId: undefined})
-  }
+  const close = () => projectCreate
+    ? setProjectCreate({projectCreate: undefined})
+    : setEditingProjectId({editingProjectId: undefined});
   const startEdit = (id: number) => setEditingProjectId({editingProjectId: id})
 
   // 超过三个返回值的时候使用对象

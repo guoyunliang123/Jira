@@ -14,6 +14,7 @@ export const ProjectModal = () => {
   const {mutateAsync, error, isLoading: mutateLoading} = useMutateProject();
   const [form] = useForm() // 重置表单
   const onFinish = (values: any) => {
+    console.log(values)
     mutateAsync({...editingProject, ...values}).then(() => {
       form.resetFields()
       close()
@@ -26,6 +27,7 @@ export const ProjectModal = () => {
     form.setFieldsValue(editingProject)
   }, [editingProject, form])
 
+  // forceRender={true} 不管显示还是隐藏都会强制渲染
   return <Drawer forceRender={true} onClose={close} visible={projectModalOpen} width={'100%'}>
     <Container>
       {
