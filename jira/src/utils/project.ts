@@ -1,5 +1,5 @@
 import {useHttp} from "./http";
-import {QueryKey, useMutation, useQuery, useQueryClient} from "react-query";
+import {QueryKey, useMutation, useQuery} from "react-query";
 import {useAddConfig, useDeleteConfig, useEditConfig} from "./use-optimistic-options";
 import {Project} from "../types/project";
 
@@ -49,8 +49,8 @@ export const useProject = (id?: number) => {
   const client = useHttp()
 
   return useQuery<Project>(
-    ['project', {id}],
-    () => client(`project/${id}`),
+    ['projects', {id}],
+    () => client(`projects/${id}`),
     {
       enabled: Boolean(id) // 或者 !!id 只有当这个 id 有值的时候 才会触发这个 useProject
     }
