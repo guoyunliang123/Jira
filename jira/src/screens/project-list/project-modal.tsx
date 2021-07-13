@@ -14,11 +14,14 @@ export const ProjectModal = () => {
   const {mutateAsync, error, isLoading: mutateLoading} = useMutateProject(useProjectsQueryKey());
   const [form] = useForm() // 重置表单
   const onFinish = (values: any) => {
-    console.log(values)
     mutateAsync({...editingProject, ...values}).then(() => {
       form.resetFields()
       close()
     })
+  }
+  const closeModal = () => {
+    form.resetFields();
+    close();
   }
 
   const title = editingProject ? '编辑项目' : '创建项目'
@@ -28,7 +31,7 @@ export const ProjectModal = () => {
   }, [editingProject, form])
 
   // forceRender={true} 不管显示还是隐藏都会强制渲染
-  return <Drawer forceRender={true} onClose={close} visible={projectModalOpen} width={'100%'}>
+  return <Drawer forceRender={true} onClose={closeModal} visible={projectModalOpen} width={'100%'}>
     <Container>
       {
         isLoading ? <Spin size={'large'}/> : <>
