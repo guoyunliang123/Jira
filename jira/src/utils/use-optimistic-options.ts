@@ -1,5 +1,5 @@
 import {QueryKey, useQueryClient} from "react-query";
-import {Project} from "../screens/project-list/list";
+import {Project} from "../types/project";
 
 /**
  * 用来生成乐观更新的功能
