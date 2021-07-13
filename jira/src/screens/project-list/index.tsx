@@ -3,7 +3,6 @@ import {useDebounce, useDocumentTitle} from "utils";
 import {List} from "./list";
 import {SearchPanel} from "./search-panel";
 import styled from "@emotion/styled";
-import {Typography} from "antd";
 import {useProjects} from "../../utils/project";
 import {useUsers} from "../../utils/user";
 import {useProjectModal, useProjectsSearchParams} from "./util";
