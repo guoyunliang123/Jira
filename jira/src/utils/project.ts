@@ -49,7 +49,7 @@ export const useProject = (id?: number) => {
   const client = useHttp()
 
   return useQuery<Project>(
-    ['projects', {id}],
+    ['project', {id}],
     () => client(`projects/${id}`),
     {
       enabled: Boolean(id) // 或者 !!id 只有当这个 id 有值的时候 才会触发这个 useProject
