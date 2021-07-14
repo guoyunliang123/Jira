@@ -64,12 +64,16 @@ const PageHeader = () => {
 const User = () => {
   const {logout, user} = useAuth()
   return (
-    <Dropdown overlay={<Menu>
-      <Menu.Item key={'layout'}>
-        <Button type={'link'} onClick={logout}>登出</Button>
-        {/*<a href={""} onClick={logout}>登出</a>*/}
-      </Menu.Item>
-    </Menu>}>
+    <Dropdown
+      overlay={
+        <Menu>
+          <Menu.Item key={'layout'}>
+            <Button type={'link'} onClick={logout}>登出</Button>
+            {/*<a href={""} onClick={logout}>登出</a>*/}
+          </Menu.Item>
+        </Menu>
+      }
+    >
       <Button type={'link'} onClick={e => e.preventDefault()}>
         Hi, {user?.name}
       </Button>
@@ -79,11 +83,8 @@ const User = () => {
 
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 6rem 1fr 6rem;
+  grid-template-rows: 6rem 1fr;
   height: 100vh;
-  grid-template-areas:
-    "header"
-    "main";
 `
 
 // grid-area 用来给 grid 子元素起名字
@@ -93,8 +94,9 @@ const Header = styled(Row)`
   z-index: 1;
 `
 
-const HeaderLeft = styled(Row)`
-`
-
+const HeaderLeft = styled(Row)``
 const HeaderRight = styled.div``
-const Main = styled.main`grid-area: main`
+const Main = styled.main`
+  display: flex;
+  overflow: hidden;
+`

@@ -6,13 +6,13 @@ import reportWebVitals from './reportWebVitals';
 import {loadServer, DevTools} from 'jira-dev-tool';
 // 一定要放在 loadDevTools 后面引入，因为 jira-dev-tool 中也使用了 antd
 import 'antd/dist/antd.less';
-import { AppProviders } from 'context';
+import {AppProviders} from 'context';
 
 loadServer(() => ReactDOM.render(
   <React.StrictMode>
     <AppProviders>
-      <DevTools />
-      <App />
+      <DevTools/>
+      <App/>
     </AppProviders>
   </React.StrictMode>,
   document.getElementById('root')

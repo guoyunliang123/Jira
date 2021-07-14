@@ -16,8 +16,6 @@ function App() {
       <ErrorBoundary fallbackRender={FullPageErrorFallback}>
         {user ? <AuthenticatedApp/> : <UnauthenticatedApp/>}
       </ErrorBoundary>
-      {/* <ProjectListScreen /> */}
-      {/* <TsReactTest /> */}
     </div>
   );
 }

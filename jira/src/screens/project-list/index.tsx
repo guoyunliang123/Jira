@@ -6,7 +6,7 @@ import styled from "@emotion/styled";
 import {useProjects} from "../../utils/project";
 import {useUsers} from "../../utils/user";
 import {useProjectModal, useProjectsSearchParams} from "./util";
-import {ButtonNoPadding, ErrorBox, Row} from "../../components/lib";
+import {ButtonNoPadding, ErrorBox, Row, ScreenContainer} from "../../components/lib";
 
 // const [keys] = useState<('name' | 'personId')[]>(['name', 'personId'])
 // 基本类型可以放到依赖里；组件状态，可以放到依赖里；非组件状态的对象，绝不可以放到依赖里。
@@ -20,7 +20,7 @@ export const ProjectListScreen = () => {
   const {data: users} = useUsers();
 
   return (
-    <Container>
+    <ScreenContainer>
       <Row between={true}>
         <h1>项目列表</h1>
         <ButtonNoPadding
@@ -30,7 +30,6 @@ export const ProjectListScreen = () => {
           创建项目
         </ButtonNoPadding>
       </Row>
-      {/*<Button onClick={retry}>retry</Button>*/}
       <SearchPanel users={users || []} param={param} setParam={setParam}/>
       <ErrorBox error={error}/>
       <List
@@ -38,13 +37,8 @@ export const ProjectListScreen = () => {
         dataSource={list || []}
         users={users || []}
       />
-      {/*<List list={list} users={users} />*/}
-    </Container>
+    </ScreenContainer>
   )
 }
 
 ProjectListScreen.whyDidYouRender = false;
-
-const Container = styled.div`
-  padding: 3.2rem
-`
